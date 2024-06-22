@@ -8,7 +8,9 @@ const openai = new OpenAI({
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, temperature } = await req.json();
+  // console.log('Received messages:', messages); 
+  console.log('Received temperature:', temperature); // Log the received temperature
 
   const response = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -21,6 +23,7 @@ export async function POST(req: Request) {
       },
       ...messages,
     ],
+    temperature: temperature,
   });
 
   const stream = OpenAIStream(response);

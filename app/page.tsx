@@ -4,13 +4,13 @@ import { useState } from "react";
 import { useChat } from "ai/react";
 
 export default function Chat() {
-  const { messages, append, isLoading } = useChat();
-  const genres = [
-    { emoji: "🧙", value: "Fantasy" },
-    { emoji: "🕵️", value: "Mystery" },
-    { emoji: "💑", value: "Romance" },
-    { emoji: "🚀", value: "Sci-Fi" },
-  ];
+  const [temperature, setTemperature] = useState(0.5);
+
+  const { messages, input, append, isLoading, data } = useChat({
+    body: {
+    temperature: temperature,
+  },
+});
   const topics = [
     { name: "Work", value: "work" },
     { name: "People", value: "people" },
@@ -49,8 +49,7 @@ export default function Chat() {
     { name: "School Jokes", value: "school_jokes" },
     { name: "Holiday Jokes", value: "holiday_jokes" },
   ];
-  const [temperature, setTemperature] = useState(2.50);
-  
+
   const handleTemperatureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTemperature(parseFloat(event.target.value));
   };
@@ -63,7 +62,6 @@ export default function Chat() {
   };
 
   const [state, setState] = useState({
-    genre: "",
     tone: "",
     topic: "",
     joke: "",
@@ -75,6 +73,14 @@ export default function Chat() {
     setState({
       ...state,
       [name]: value,
+    });
+  };
+
+  const handleGenerateJoke = () => {
+    console.log('Temperature before append:', temperature);
+    append({
+      role: "user",
+      content: `Can you make a joke of this type ${state.joke} on this topic ${state.topic} with this  ${state.tone} tone `,
     });
   };
 
@@ -132,7 +138,7 @@ export default function Chat() {
             <input
               type="range"
               min="0"
-              max="5"
+              max="2"
               step="0.01"
               value={temperature}
               onChange={handleTemperatureChange}
@@ -141,7 +147,7 @@ export default function Chat() {
             <input
               type="number"
               min="0"
-              max="5"
+              max="2"
               step="0.01"
               value={temperature}
               onChange={handleTemperatureInputChange}
@@ -152,15 +158,10 @@ export default function Chat() {
 
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
-            disabled={isLoading || (!state.genre || !state.tone)}
-            onClick={() =>
-              append({
-                role: "user",
-                content: `Generate a ${state.genre} story in a ${state.tone} tone`,
-              })
-            }
+            disabled={isLoading || (!state.tone || !state.joke || !state.topic)}
+            onClick={handleGenerateJoke}
           >
-            Generate Story
+            Generate a joke
           </button>
 
           <div
