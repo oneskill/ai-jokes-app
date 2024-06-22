@@ -6,7 +6,7 @@ import { useChat } from "ai/react";
 export default function Chat() {
   const [temperature, setTemperature] = useState(0.5);
 
-  const { messages, input, append, isLoading, data } = useChat({
+  const { messages, append, isLoading } = useChat({
     body: {
     temperature: temperature,
   },
@@ -62,9 +62,9 @@ export default function Chat() {
   };
 
   const [state, setState] = useState({
-    tone: "",
-    topic: "",
-    joke: "",
+    tone: "funny",
+    topic: "people",
+    joke: "riddles",
   });
 
   const handleChange = ({
@@ -77,10 +77,9 @@ export default function Chat() {
   };
 
   const handleGenerateJoke = () => {
-    console.log('Temperature before append:', temperature);
     append({
       role: "user",
-      content: `Can you make a joke of this type ${state.joke} on this topic ${state.topic} with this  ${state.tone} tone `,
+      content: `Make a ${state.joke} joke on ${state.topic} with ${state.tone} tone `,
     });
   };
 
