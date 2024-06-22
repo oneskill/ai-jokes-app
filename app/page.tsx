@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useChat } from "ai/react";
 
@@ -8,9 +7,10 @@ export default function Chat() {
 
   const { messages, append, isLoading } = useChat({
     body: {
-    temperature: temperature,
-  },
-});
+      temperature: temperature,
+    },
+  });
+
   const topics = [
     { name: "Work", value: "work" },
     { name: "People", value: "people" },
@@ -63,8 +63,8 @@ export default function Chat() {
 
   const [state, setState] = useState({
     tone: "funny",
-    topic: "people",
-    joke: "riddles",
+    topic: "animals",
+    joke: "puns", 
   });
 
   const handleChange = ({
@@ -77,10 +77,25 @@ export default function Chat() {
   };
 
   const handleGenerateJoke = () => {
+    console.log('Temperature before append:', temperature);
     append({
       role: "user",
-      content: `Make a ${state.joke} joke on ${state.topic} with ${state.tone} tone `,
+      content: `Can you make a joke of this type ${state.joke} on this topic ${state.topic} with this ${state.tone} tone `,
     });
+  };
+
+  const evaluateJoke = (joke) => {
+    append({
+      role: "user",
+      content: `Evaluate this joke: "${joke}". Provide feedback on its funniness, appropriateness, and offensiveness.`,
+    });
+  };
+
+  const handleEvaluation = () => {
+    const joke = messages[messages.length - 1]?.content;
+    if (joke && !joke.startsWith("Evaluate")) {
+      evaluateJoke(joke);
+    }
   };
 
   return (
@@ -161,6 +176,14 @@ export default function Chat() {
             onClick={handleGenerateJoke}
           >
             Generate a joke
+          </button>
+
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+            disabled={messages.length === 0 || messages[messages.length - 1]?.content.startsWith("Evaluate")}
+            onClick={handleEvaluation}
+          >
+            Evaluate the joke
           </button>
 
           <div
