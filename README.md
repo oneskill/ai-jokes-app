@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Jokes APP
+
+This project is a joke generator that allows you to customize various aspects of the jokes it creates. You can select specific topics, types of jokes, and tones. Additionally, you can fine-tune the joke generation using a parameter called "temperature." The tool also includes a feature that lets the AI evaluate the jokes for humor, appropriateness, and potential offensiveness.
+
+
+![image](https://github.com/oneskill/ai-jokes-app/assets/7022412/3e75e29a-ecd4-49ab-8a16-abf9177565d3)
 
 ## Getting Started
 
@@ -16,21 +21,10 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Model
 
-## Learn More
+You need to choose the model you wish to run locally. <br/>
+For instance, using the Text Generation Web UI, you can run the model: tinyllama-1.1b-chat-v1.0.Q8_0.gguf. <br/>
+Make sure to enable both "OpenAI" and "API" options in the settings of the Text Generation Web UI.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
